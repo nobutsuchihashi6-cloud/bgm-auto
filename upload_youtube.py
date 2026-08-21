@@ -37,12 +37,15 @@ def main():
 
     today = datetime.date.today().strftime("%Y/%m/%d")
 
-    title = f"Relaxing Cafe Jazz BGM - {today} | 作業用・勉強用1時間"
-    description = (
-        "カフェで流れているような、落ち着いたジャズBGMです。\n"
-        "作業用・読書用・勉強用・リラックスタイムにどうぞ。\n\n"
-        "#lofi #cafejazz #bgm"
+        vol_number = os.environ.get("VOL_NUMBER", "1")
+    title = f"Relaxing Cafe Jazz BGM | 1 Hour of Lofi Music for Work & Study | Vol. {vol_number}"
+
+        description = (
+        "A relaxing lofi cafe jazz playlist, perfect for background music "
+        "while you work, study, read, or relax.\n\n"
+        "#lofi #cafejazz #bgm #studymusic #relaxingmusic"
     )
+
 
     youtube = get_youtube_service()
 
