@@ -48,19 +48,25 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
-    cmd = [
+        cmd = [
         "ffmpeg", "-y",
         "-loop", "1",
+        "-r", "1",
         "-i", image_file,
         "-i", AUDIO_FILE,
+        "-vf", "scale=1280:-2",
         "-c:v", "libx264",
+        "-preset", "ultrafast",
         "-tune", "stillimage",
+        "-crf", "30",
+        "-r", "1",
         "-c:a", "aac",
-        "-b:a", "192k",
+        "-b:a", "128k",
         "-pix_fmt", "yuv420p",
         "-shortest",
         VIDEO_FILE,
     ]
+
     subprocess.run(cmd, check=True)
     print(f"完成: {VIDEO_FILE}")
 
