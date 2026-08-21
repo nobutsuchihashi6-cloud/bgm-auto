@@ -34,9 +34,12 @@ jobs:
       - name: 動画化
         run: python make_video.py
 
+          
       - name: YouTubeにアップロード
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          VOL_NUMBER: ${{ github.run_number }}
         run: python upload_youtube.py
+
