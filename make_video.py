@@ -14,7 +14,6 @@ import random
 AUDIO_FILE = "output/full_bgm.mp3"
 VIDEO_FILE = "output/video.mp4"
 
-# 探す場所:ルート直下と assets 以下、両方に対応
 IMAGE_PATTERNS = [
     "*.jpg", "*.jpeg", "*.JPG", "*.JPEG", "*.png", "*.PNG",
     "assets/*.jpg", "assets/*.jpeg", "assets/*.JPG", "assets/*.JPEG", "assets/*.png",
@@ -27,7 +26,6 @@ def find_background_images():
     found = []
     for pattern in IMAGE_PATTERNS:
         found.extend(glob.glob(pattern))
-    # ある程度サイズの大きい画像ファイルのみに絞る(1KB未満は除外)
     found = [f for f in found if os.path.getsize(f) > 1024]
     return sorted(set(found))
 
@@ -48,7 +46,7 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
-        cmd = [
+    cmd = [
         "ffmpeg", "-y",
         "-loop", "1",
         "-r", "1",
@@ -66,7 +64,6 @@ def main():
         "-shortest",
         VIDEO_FILE,
     ]
-
     subprocess.run(cmd, check=True)
     print(f"完成: {VIDEO_FILE}")
 
