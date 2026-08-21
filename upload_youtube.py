@@ -35,17 +35,14 @@ def main():
     if not os.path.exists(VIDEO_FILE):
         raise FileNotFoundError(f"{VIDEO_FILE} がありません。先にmake_video.pyを実行してください。")
 
-    today = datetime.date.today().strftime("%Y/%m/%d")
-
-        vol_number = os.environ.get("VOL_NUMBER", "1")
+    vol_number = os.environ.get("VOL_NUMBER", "1")
     title = f"Relaxing Cafe Jazz BGM | 1 Hour of Lofi Music for Work & Study | Vol. {vol_number}"
 
-        description = (
+    description = (
         "A relaxing lofi cafe jazz playlist, perfect for background music "
         "while you work, study, read, or relax.\n\n"
         "#lofi #cafejazz #bgm #studymusic #relaxingmusic"
     )
-
 
     youtube = get_youtube_service()
 
@@ -56,7 +53,7 @@ def main():
                 "title": title,
                 "description": description,
                 "tags": ["lofi", "cafe jazz", "bgm", "relaxing music", "study music"],
-                "categoryId": "10",  # Music
+                "categoryId": "10",
             },
             "status": {
                 "privacyStatus": "public",
@@ -77,3 +74,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
