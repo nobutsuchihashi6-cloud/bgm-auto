@@ -1,0 +1,42 @@
+name: Weekly BGM Upload
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: ffmpegをインストール
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: 依存パッケージをインストール
+        run: pip install -r requirements.txt
+
+      - name: Google Driveから最新クリップをダウンロード
+        env:
+          GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+        run: python download_from_drive.py
+
+      - name: BGMを1時間に連結
+        run: python combine_bgm.py
+
+      - name: 動画化
+        run: python make_video.py
+
+      - name: YouTubeにアップロード
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python upload_youtube.py
