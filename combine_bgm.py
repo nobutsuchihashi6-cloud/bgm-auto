@@ -1,5 +1,5 @@
 """
-clips/ 内のwavファイルを「同じ曲を2〜3回連続で使ってから切り替える」順序で並べ、
+clips/ 内のwavファイルを「同じ曲を連続で使ってから切り替える」順序で並べ、
 クロスフェードで繋いで約1時間のBGM (output/full_bgm.mp3) を作る。
 
 単純に毎回別の曲へ切り替えるより、同じ曲がある程度連続する方が
@@ -15,12 +15,17 @@ OUTPUT_DIR = "output"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "full_bgm.mp3")
 
 TARGET_MS = 60 * 60 * 1000  # 1時間
-CROSSFADE_MS = 6000  # クロスフェード6秒
-MIN_REPEAT = 2  # 同じ曲を連続で使う最小回数
-MAX_REPEAT = 3  # 同じ曲を連続で使う最大回数
+CROSSFADE_MS = 6000  # クロスフェード6秒(切り替えの継ぎ目を目立たなくする)
+MIN_REPEAT = 18  # 同じ曲を連続で使う最小回数(約9分)
+MAX_REPEAT = 22  # 同じ曲を連続で使う最大回数(約11分)
 
 
 def build_play_order(num_clips):
+    """
+    曲のインデックス(0, 1, 2, ...)を、
+    「同じ番号がMIN_REPEAT〜MAX_REPEAT回連続する」形で、
+    かつ隣り合う塊が同じ曲にならないように並べたリストを作る。
+    """
     order = []
     last_index = None
     indices = list(range(num_clips))
@@ -32,6 +37,7 @@ def build_play_order(num_clips):
         order.extend([chosen] * repeat)
         last_index = chosen
 
+        # 十分な長さの並び順ができたら終了(後段でTARGET_MSまで使う)
         if len(order) > 200:
             break
 
