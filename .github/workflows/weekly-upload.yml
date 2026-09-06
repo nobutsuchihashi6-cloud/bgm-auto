@@ -2,7 +2,9 @@ name: Weekly BGM Upload
 
 on:
   schedule:
-    - cron: '0 0 * * 1'
+  - cron: '0 11 * * 0'   # 日曜 日本時間20:00 → 米国東部朝
+  - cron: '0 11 * * 3'   # 水曜 日本時間20:00 → 米国東部朝
+
   workflow_dispatch: {}
 
 jobs:
