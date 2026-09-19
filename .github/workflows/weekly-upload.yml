@@ -1,6 +1,10 @@
 name: Weekly BGM Upload
 
+permissions:
+  contents: write
+
 on:
+
   schedule:
   - cron: '0 11 * * 0'   # 日曜 日本時間20:00 → 米国東部朝
   - cron: '0 11 * * 3'   # 水曜 日本時間20:00 → 米国東部朝
