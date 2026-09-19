@@ -36,6 +36,14 @@ jobs:
       - name: 動画化
         run: python make_video.py
 
+      - name: 画像履歴を保存
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .last_images.json
+          git commit -m "update image history" || echo "変更なし"
+          git push
+
           
       - name: YouTubeにアップロード
         env:
