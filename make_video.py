@@ -15,7 +15,7 @@ import json
 AUDIO_FILE = "output/full_bgm.mp3"
 VIDEO_FILE = "output/video.mp4"
 HISTORY_FILE = ".last_images.json"
-HISTORY_SIZE = 2  # 直近何回分の画像を避けるか
+HISTORY_SIZE = 5  # 直近何回分の画像を避けるか
 
 IMAGE_PATTERNS = [
     "*.jpg", "*.jpeg", "*.JPG", "*.JPEG", "*.png", "*.PNG",
